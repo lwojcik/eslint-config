@@ -65,5 +65,3 @@ npm test            # lints fixture files with the config and asserts the rules 
 npm run typecheck   # checks index.d.ts against the tests
 npm run format:check
 ```
-
-Commits follow [Conventional Commits](https://www.conventionalcommits.org/); `npm run commit` opens a prompt.
