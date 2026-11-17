@@ -8,9 +8,7 @@ environment:
 install:
   - npm ci
 
-build: off
-
-test_script:
+build_script:
   - npm run format:check
   - npm run typecheck
   - npm run test:coverage
