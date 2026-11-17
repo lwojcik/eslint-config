@@ -1,7 +1,7 @@
 {
   "name": "@lwojcik/eslint-config",
   "version": "0.1.0",
-  "description": "A strict, functional-style ESLint flat config factory for TypeScript projects.",
+  "description": "Opinionated ESLint config for TypeScript projects focused on enforcing functional style and security",
   "license": "MIT",
   "type": "module",
   "main": "index.js",
