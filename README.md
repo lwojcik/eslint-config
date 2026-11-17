@@ -1,6 +1,6 @@
 # @lwojcik/eslint-config
 
-[![npm version](https://img.shields.io/npm/v/@lwojcik/eslint-config)](https://www.npmjs.com/package/@lwojcik/eslint-config)
+[![npm version](https://img.shields.io/npm/v/%40lwojcik%2Feslint-config)](https://www.npmjs.com/package/@lwojcik/eslint-config)
 [![codecov](https://codecov.io/gh/lwojcik/eslint-config/graph/badge.svg)](https://codecov.io/gh/lwojcik/eslint-config)
 [![Build status](https://ci.appveyor.com/api/projects/status/9tc4d79iibn1rmeq/branch/main?svg=true)](https://ci.appveyor.com/project/lwojcik/lwojcik-eslint-config/branch/main)
 
