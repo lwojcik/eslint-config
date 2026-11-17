@@ -21,7 +21,7 @@
   },
   "scripts": {
     "prepare": "husky",
-    "commit": "cz",
+    "commit": "czg",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest run",
@@ -29,11 +29,6 @@
     "test:coverage": "vitest run --coverage",
     "release": "HUSKY=0 GITHUB_TOKEN=$(gh auth token) release-it --no-increment --no-git.commit",
     "release:prepare": "scripts/release-prepare.sh"
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
   },
   "dependencies": {
     "@eslint/js": "^10.0.1",
@@ -59,8 +54,7 @@
     "@release-it/conventional-changelog": "^12.0.2",
     "@types/node": "26.6.6",
     "@vitest/coverage-v8": "5.1.0",
-    "commitizen": "4.3.2",
-    "cz-conventional-changelog": "3.3.0",
+    "czg": "1.14.0",
     "husky": "9.1.7",
     "prettier": "3.10.1",
     "release-it": "^21.1.2",
