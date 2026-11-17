@@ -1,6 +1,6 @@
 {
   "name": "@lwojcik/eslint-config",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Opinionated ESLint config for TypeScript projects focused on enforcing functional style and security",
   "license": "MIT",
   "type": "module",
@@ -27,8 +27,8 @@
     "test": "vitest run",
     "typecheck": "tsc",
     "test:coverage": "vitest run --coverage",
-    "release": "HUSKY=0 GITHUB_TOKEN=$(gh auth token) release-it",
-    "release:dry": "HUSKY=0 GITHUB_TOKEN=$(gh auth token) release-it --dry-run"
+    "release": "HUSKY=0 GITHUB_TOKEN=$(gh auth token) release-it --no-increment --no-git.commit",
+    "release:prepare": "scripts/release-prepare.sh"
   },
   "config": {
     "commitizen": {
