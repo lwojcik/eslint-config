@@ -66,6 +66,11 @@ describe('rules in src/', () => {
       `export const same = (a1: number, b1: number): boolean => a1 == b1;\n`,
       'eqeqeq',
     ],
+    [
+      'emails in strings',
+      `export const contact = 'jane.doe@example.org';\n`,
+      'pii/no-email',
+    ],
   ])('reports %s', async (_name, code, rule) => {
     expect(await rulesFor(code)).toContain(rule);
   });
