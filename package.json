@@ -1,0 +1,68 @@
+{
+  "name": "@lwojcik/eslint-config",
+  "version": "0.1.0",
+  "description": "A strict, functional-style ESLint flat config factory for TypeScript projects.",
+  "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prepare": "husky",
+    "commit": "cz",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "typecheck": "tsc"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "eslint-plugin-functional": "10.0.1",
+    "eslint-plugin-json": "^5.0.0",
+    "eslint-plugin-n": "^18.5.0",
+    "eslint-plugin-no-comments": "^1.2.1",
+    "eslint-plugin-no-secrets": "^2.3.3",
+    "eslint-plugin-no-unsanitized": "^4.1.5",
+    "eslint-plugin-optimize-regex": "^1.2.1",
+    "eslint-plugin-security": "^4.2.1",
+    "eslint-plugin-security-node": "^1.1.4",
+    "eslint-plugin-simple-import-sort": "^14.0.0",
+    "eslint-plugin-sonarjs": "^4.2.2",
+    "eslint-plugin-unicorn": "^79.0.0",
+    "eslint-plugin-xss": "^0.1.12"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "21.2.4",
+    "@commitlint/config-conventional": "21.2.4",
+    "@types/node": "26.6.6",
+    "commitizen": "4.3.2",
+    "cz-conventional-changelog": "3.3.0",
+    "husky": "9.1.7",
+    "prettier": "3.10.1",
+    "typescript": "6.0.3",
+    "vitest": "5.1.0"
+  },
+  "peerDependencies": {
+    "eslint": "^10.0.0",
+    "typescript": ">=5.0.0",
+    "typescript-eslint": "^8.0.0"
+  }
+}
