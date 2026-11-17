@@ -1,6 +1,6 @@
 {
   "name": "@lwojcik/eslint-config",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Opinionated ESLint config for TypeScript projects focused on enforcing functional style and security",
   "license": "MIT",
   "type": "module",
