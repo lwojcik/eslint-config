@@ -9,7 +9,8 @@
   },
   "github": {
     "release": true,
-    "autoGenerate": true
+    "autoGenerate": true,
+    "releaseName": "v${version}"
   },
   "npm": {
     "publish": true
