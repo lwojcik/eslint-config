@@ -5,6 +5,7 @@ import functional from 'eslint-plugin-functional';
 import json from 'eslint-plugin-json';
 import nodePlugin from 'eslint-plugin-n';
 import noComments from 'eslint-plugin-no-comments';
+import noPii from 'eslint-plugin-no-pii';
 import noSecrets from 'eslint-plugin-no-secrets';
 import noUnsanitized from 'eslint-plugin-no-unsanitized';
 import optimizeRegex from 'eslint-plugin-optimize-regex';
@@ -182,6 +183,7 @@ export const createConfig = ({
       files: SOURCE_FILES,
     },
     { ...sonarjs.recommended, files: SOURCE_FILES },
+    { ...noPii.configs.recommended, files: SOURCE_FILES },
     { ...security.configs.recommended, files: SOURCE_FILES },
     {
       files: SOURCE_FILES,
