@@ -1,5 +1,9 @@
 # @lwojcik/eslint-config
 
+[![npm version](https://img.shields.io/npm/v/@lwojcik/eslint-config)](https://www.npmjs.com/package/@lwojcik/eslint-config)
+[![codecov](https://codecov.io/gh/lwojcik/eslint-config/graph/badge.svg)](https://codecov.io/gh/lwojcik/eslint-config)
+[![Build status](https://ci.appveyor.com/api/projects/status/github/lwojcik/eslint-config?branch=main&svg=true)](https://ci.appveyor.com/project/lwojcik/eslint-config)
+
 A heavily opinionated ESLint config factory for TypeScript projects, focused on enforcing functional style and security.
 
 ## Install
@@ -52,10 +56,6 @@ Rules apply to `**/src/**/*.ts` unless noted.
 - **JSON** files are linted with `eslint-plugin-json`, comments allowed.
 
 Type-aware linting needs a `tsconfig.json` that includes your files.
-
-## Licence
-
-MIT
 
 ## Development
 

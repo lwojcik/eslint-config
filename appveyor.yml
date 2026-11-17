@@ -11,4 +11,14 @@ install:
 test_script:
   - npm run format:check
   - npm run typecheck
-  - npm test
+  - npm run test:coverage
+
+after_test:
+  - curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import > /dev/null
+  - curl -Os https://uploader.codecov.io/latest/linux/codecov > /dev/null
+  - curl -Os https://uploader.codecov.io/latest/linux/codecov.SHA256SUM > /dev/null
+  - curl -Os https://uploader.codecov.io/latest/linux/codecov.SHA256SUM.sig > /dev/null
+  - gpgv codecov.SHA256SUM.sig codecov.SHA256SUM
+  - shasum -a 256 -c codecov.SHA256SUM
+  - chmod +x codecov
+  - ./codecov --disable=gcov
