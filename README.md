@@ -46,6 +46,14 @@ Optional, for projects that use TanStack Query. The rules target the `use*` hook
 npm install --save-dev --save-exact @tanstack/eslint-plugin-query
 ```
 
+### NestJS
+
+Optional, for NestJS projects. Add its plugin to whichever install above you use. The plugin also expects `class-validator`, which most Nest projects already have:
+
+```sh
+npm install --save-dev --save-exact @darraghor/eslint-plugin-nestjs-typed
+```
+
 ## Use
 
 ### TypeScript project
@@ -123,6 +131,19 @@ export default [
 ];
 ```
 
+### NestJS
+
+Add `createNestjsConfig` from the `/nestjs` subpath to the TypeScript setup:
+
+```js
+import { createNestjsConfig } from '@lwojcik/eslint-config/nestjs';
+
+export default [
+  ...createConfig({ tsconfigRootDir: import.meta.dirname }),
+  ...createNestjsConfig({ swagger: true }),
+];
+```
+
 ## Options
 
 | Option            | Type                               | Default      | Meaning                                                                                                                         |
@@ -195,6 +216,24 @@ Optional, and independent of the React and Angular configs. `createTanstackQuery
 - **Correctness:** `exhaustive-deps` (query keys must include every variable the query function uses), `stable-query-client`, `no-unstable-deps`, `no-void-query-fn` and `no-rest-destructuring`.
 - **Angular:** the rules recognise the `use*` hooks and `queryOptions()`, but not `injectQuery`, `injectMutation` or `injectInfiniteQuery`. Define your options with `queryOptions()` and pass them in, as in `injectQuery(() => todoOptions(this.id()))`, so `exhaustive-deps` and `no-void-query-fn` can check them. Options written inline inside `injectQuery(() => ({ ... }))` are not checked.
 - **Conventions:** `infinite-query-property-order`, `mutation-property-order` and `prefer-query-options`, which asks you to define queries with `queryOptions()` instead of inline objects.
+
+## NestJS config
+
+Optional, and independent of the other framework configs. `createNestjsConfig` applies the recommended preset of `@darraghor/eslint-plugin-nestjs-typed` to `**/*.ts`.
+
+| Option        | Type              | Default           | Meaning                                                                                                                     |
+| ------------- | ----------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `swagger`     | `boolean`         | `false`           | Keeps the `@nestjs/swagger` rules (`controllers-should-supply-api-tags`, `api-method-should-specify-api-response`, ...) on. |
+| `sourceGlobs` | `string[]`        | `['src/**/*.ts']` | Where `injectable-should-be-provided` looks for modules, relative to the directory ESLint runs from. Set it in a monorepo.  |
+| `overrides`   | `Linter.Config[]` | `[]`              | Extra flat-config objects, appended last.                                                                                   |
+
+- **Dependency injection:** `injectable-should-be-provided` (a service or controller no module registers fails at startup), `provided-injected-should-match-factory-parameters`, `use-injectable-provided-token` and `forward-ref-injection-should-use-wrapper-type`.
+- **Validation and security:** `validation-pipe-should-use-forbid-unknown`, `all-properties-are-whitelisted`, `all-properties-have-explicit-defined`, `validated-non-primitive-property-needs-type-decorator`, `validate-nested-of-array-should-set-each` and `uploaded-file-should-be-validated`.
+- **Routes and decorators:** `param-decorator-name-matches-route-param` and `no-duplicate-decorators`.
+- **Constructors:** `max-params` is 5 instead of 2 in files named `*.consumer.ts`, `*.controller.ts`, `*.filter.ts`, `*.gateway.ts`, `*.guard.ts`, `*.handler.ts`, `*.interceptor.ts`, `*.middleware.ts`, `*.pipe.ts`, `*.processor.ts`, `*.provider.ts`, `*.repository.ts`, `*.resolver.ts`, `*.service.ts` and `*.strategy.ts`, because injected services count as parameters.
+- **Module scan:** `injectable-should-be-provided` skips paths matching `node_modules`, `.test.` and `.spec.`. The plugin's own default builds these as regular expressions without escaping the dots, so `.test.` also matches `/test/` and `/latest/`; this config escapes them.
+
+The plugin needs TypeScript below 6.1 and the `class-validator` package.
 
 ## Development
 

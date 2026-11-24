@@ -47,6 +47,7 @@ describe('package.json', () => {
       'angular-eslint',
       'eslint-plugin-rxjs-x',
       '@tanstack/eslint-plugin-query',
+      '@darraghor/eslint-plugin-nestjs-typed',
     ];
 
     expect(plugins.filter((name) => !(name in pkg.peerDependencies))).toEqual(
