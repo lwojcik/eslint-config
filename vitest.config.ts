@@ -6,7 +6,7 @@ export default defineConfig({
     testTimeout: 20_000,
     coverage: {
       provider: 'v8',
-      include: ['index.js'],
+      include: ['index.js', 'react.js'],
       thresholds: {
         lines: 100,
         functions: 100,

@@ -8,13 +8,25 @@ A heavily opinionated ESLint config factory for TypeScript projects, focused on 
 
 ## Install
 
+Pin an exact version: a major bump of a bundled plugin (unicorn, sonarjs, ...) can add failures to your whole codebase, so it should reach you as a version change you choose.
+
+### TypeScript project
+
 ```sh
 npm install --save-dev --save-exact @lwojcik/eslint-config eslint typescript typescript-eslint
 ```
 
-Pin an exact version: a major bump of a bundled plugin (unicorn, sonarjs, ...) can add failures to your whole codebase, so it should reach you as a version change you choose.
+### React project
+
+The TypeScript install, plus the two optional peer dependencies of the `/react` config:
+
+```sh
+npm install --save-dev --save-exact @lwojcik/eslint-config eslint typescript typescript-eslint @eslint-react/eslint-plugin eslint-plugin-jsx-a11y-x
+```
 
 ## Use
+
+### TypeScript project
 
 ```js
 // eslint.config.js
@@ -28,6 +40,23 @@ export default createConfig({
 ```
 
 `createConfig` returns an array of flat-config objects. Your `overrides` are appended last, so they win.
+
+### React project
+
+Add `createReactConfig` after `createConfig`:
+
+```js
+// eslint.config.js
+import { createConfig } from '@lwojcik/eslint-config';
+import { createReactConfig } from '@lwojcik/eslint-config/react';
+
+export default [
+  ...createConfig({ tsconfigRootDir: import.meta.dirname }),
+  ...createReactConfig({ tsconfigRootDir: import.meta.dirname }),
+];
+```
+
+Your `tsconfig.json` must include the `.tsx` files and set `jsx`. See [React config](#react-config) for what it adds.
 
 ## Options
 
@@ -43,12 +72,12 @@ export default createConfig({
 
 ## What it enforces
 
-Rules apply to `**/src/**/*.ts` unless noted.
+Rules apply to `**/src/**/*.{ts,tsx}` unless noted.
 
 - **Base:** `@eslint/js` recommended and typescript-eslint's type-checked recommended set, with unused disable directives reported as errors.
 - **Functional style:** loops and `let` are banned (use `map`, `filter`, `reduce`, `const`), and `functional/immutable-data` forbids mutating existing values. A variable named `draft…` is exempt, for immer drafts.
 - **Size limits:** at most 2 parameters per function, 20 statements, 50 lines per function, 250 lines per file, nesting depth 4, complexity 10, one class per file, no magic numbers (except in `src/config.ts`), identifiers of at least 2 characters.
-- **No comments:** every comment is an error except `eslint` and `global` directives (all files, including tests).
+- **No comments:** every comment is an error except `eslint` and `global` directives (all files, including tests). This includes JSX comments such as `{/* note */}`.
 - **Imports:** sorted with `simple-import-sort`, in the groups: side effects, `node:`, packages, your aliases in the order given, relative.
 - **Style:** 80-column lines, padding lines around returns, declarations and blocks, `eqeqeq`, `prefer-const`, `object-shorthand`.
 - **Plugins:** `unicorn` and `sonarjs` recommended sets (a few noisy rules are off), `security`, `security-node`, `no-secrets`, `no-unsanitized`, `xss`, `optimize-regex` and `n` for Node.
@@ -56,6 +85,16 @@ Rules apply to `**/src/**/*.ts` unless noted.
 - **JSON** files are linted with `eslint-plugin-json`, comments allowed.
 
 Type-aware linting needs a `tsconfig.json` that includes your files.
+
+## React config
+
+Only for React projects: `createReactConfig` applies to `**/*.tsx` and takes `tsconfigRootDir` (required) and `overrides` (`Linter.Config[]`, appended last). It does not change the TypeScript-only setup.
+
+- **React rules:** the `strict-type-checked` preset of `@eslint-react/eslint-plugin`, with every warning raised to an error. It covers hooks, purity, keys, leaked conditional rendering, and unsafe DOM APIs such as `dangerouslySetInnerHTML`. `eslint-plugin-react-hooks` is not needed, because this preset replaces its rules.
+- **Accessibility:** the `strict` preset of `eslint-plugin-jsx-a11y-x`, a fork of `eslint-plugin-jsx-a11y` that supports ESLint 10.
+- **Base rules:** the base config also applies to `.tsx` files in `src/`. Raise `max-lines-per-function` through `overrides` if your components outgrow 50 lines.
+
+Both plugins are optional peer dependencies: a TypeScript-only project does not need them.
 
 ## Development
 
