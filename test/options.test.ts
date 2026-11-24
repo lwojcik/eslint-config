@@ -29,6 +29,20 @@ describe('processEnv', () => {
   });
 });
 
+describe('imports without aliases', () => {
+  const PACKAGES_FIRST = `import { b } from 'node:fs';\n\nimport { c } from 'vitest';\n\nimport { a } from './a';\n\nexport const all = [a, b, c];\n`;
+  const RELATIVE_FIRST = `import { a } from './a';\n\nimport { b } from 'node:fs';\n\nimport { c } from 'vitest';\n\nexport const all = [a, b, c];\n`;
+
+  it('sorts packages before relative imports', async () => {
+    expect(await lint({ file: FILE, code: PACKAGES_FIRST })).not.toContain(
+      'simple-import-sort/imports',
+    );
+    expect(await lint({ file: FILE, code: RELATIVE_FIRST })).toContain(
+      'simple-import-sort/imports',
+    );
+  });
+});
+
 describe('importAliases', () => {
   const options = { importAliases: ['@app'] };
 

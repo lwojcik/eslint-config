@@ -96,6 +96,43 @@ describe('a realistic component', () => {
   });
 });
 
+describe('other Angular code', () => {
+  it('lints a service using takeUntilDestroyed clean', async () => {
+    expect(
+      await lintAngular(
+        `import { DestroyRef, inject, Injectable, signal } from '@angular/core';\nimport { takeUntilDestroyed } from '@angular/core/rxjs-interop';\nimport { type Observable } from 'rxjs';\n\n@Injectable({ providedIn: 'root' })\nexport class TickService {\n  private readonly cleanup = inject(DestroyRef);\n  readonly failure = signal('');\n  readonly ticks = signal(0);\n\n  start(source: Observable<number>): void {\n    source.pipe(takeUntilDestroyed(this.cleanup)).subscribe({\n      error: (reason: unknown) => this.failure.set(String(reason)),\n      next: (value) => this.ticks.set(value),\n    });\n  }\n}\n`,
+      ),
+    ).toEqual([]);
+  });
+
+  it('lints a functional guard and routes clean', async () => {
+    expect(
+      await lintAngular(
+        `import { inject } from '@angular/core';\nimport { type CanActivateFn, Router, type Routes } from '@angular/router';\n\nexport const authGuard: CanActivateFn = () =>\n  inject(Router).createUrlTree(['/login']);\n\nexport const routes: Routes = [\n  { canActivate: [authGuard], children: [], path: '' },\n];\n`,
+        'src/app.routes.ts',
+      ),
+    ).toEqual([]);
+  });
+
+  it('lints a colocated spec file clean', async () => {
+    expect(
+      await lintAngular(
+        `import { TestBed } from '@angular/core/testing';\nimport { describe, expect, it } from 'vitest';\n\nimport { CounterComponent } from './app.component';\n\ndescribe('CounterComponent', () => {\n  it('counts', () => {\n    const fixture = TestBed.createComponent(CounterComponent);\n\n    fixture.componentInstance.increment();\n\n    expect(fixture.componentInstance.count()).toBe(1);\n  });\n});\n`,
+        'src/app.component.spec.ts',
+      ),
+    ).toEqual([]);
+  });
+
+  it('lints a template with defer, let, i18n and bindings clean', async () => {
+    expect(
+      await lintAngular(
+        `<label for="name">Name</label>\n<input id="name" [value]="name()" (input)="rename($event)" />\n@defer (on viewport) {\n  <app-heavy [data]="data$ | async" />\n} @placeholder {\n  <p i18n>Loading</p>\n}\n@let total = items().length;\n<p [class.active]="active()" [attr.aria-label]="label()">{{ total }}</p>\n<a [routerLink]="['/x']" i18n-title title="Go">Go</a>\n`,
+        HTML_FILE,
+      ),
+    ).toEqual([]);
+  });
+});
+
 describe('selectorPrefix', () => {
   const wrongPrefix = CLEAN_COMPONENT.replace('app-counter', 'foo-counter');
 

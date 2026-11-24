@@ -124,7 +124,7 @@ Rules apply to `**/src/**/*.{ts,tsx}` unless noted.
 - **Imports:** sorted with `simple-import-sort`, in the groups: side effects, `node:`, packages, your aliases in the order given, relative.
 - **Style:** 80-column lines, padding lines around returns, declarations and blocks, `eqeqeq`, `prefer-const`, `object-shorthand`.
 - **Plugins:** `unicorn` and `sonarjs` recommended sets (a few noisy rules are off), `security`, `security-node`, `no-secrets`, `no-unsanitized`, `xss`, `optimize-regex` and `n` for Node.
-- **Tests and scripts** (`**/test/**`, `**/scripts/**`): the `no-unsafe-*` and `no-explicit-any` rules are off, and in tests also the promise and throw rules.
+- **Tests and scripts** (`**/test/**`, `**/*.spec.*`, `**/*.test.*`, `**/scripts/**`): the `no-unsafe-*` and `no-explicit-any` rules are off, and in tests also the promise and throw rules. In colocated `*.spec.*` and `*.test.*` files, the magic-number, `max-lines`, `max-lines-per-function` and `max-statements` rules are off too.
 - **JSON** files are linted with `eslint-plugin-json`, comments allowed.
 
 Type-aware linting needs a `tsconfig.json` that includes your files.

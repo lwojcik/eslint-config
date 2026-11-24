@@ -25,12 +25,16 @@ const LOOP_SELECTORS = [
   'WhileStatement',
   'DoWhileStatement',
 ];
+const TEST_FILES = ['**/test/**/*.{ts,tsx}', '**/*.{spec,test}.{ts,tsx}'];
 const DRAFT_PATTERNS = ['draft.**', 'draft*.**', '**.draft.**', '**.draft*.**'];
+
+const packagePattern = (aliases) =>
+  aliases.length > 0 ? `^(?!${aliases.join('|')})@?\\w` : '^@?\\w';
 
 const importGroups = (aliases) => [
   ['^\\u0000'],
   ['^node:'],
-  [`^(?!${aliases.join('|')})@?\\w`],
+  [packagePattern(aliases)],
   ...aliases.map((alias) => [`^${alias}/`]),
   ['^\\.'],
 ];
@@ -260,7 +264,7 @@ export const createConfig = ({
       rules: { 'no-comments/disallowComments': 'error' },
     },
     {
-      files: ['**/test/**/*.{ts,tsx}', '**/scripts/**/*.{ts,tsx}'],
+      files: [...TEST_FILES, '**/scripts/**/*.{ts,tsx}'],
       rules: {
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-unsafe-argument': 'off',
@@ -271,11 +275,20 @@ export const createConfig = ({
       },
     },
     {
-      files: ['**/test/**/*.{ts,tsx}'],
+      files: TEST_FILES,
       rules: {
         '@typescript-eslint/require-await': 'off',
         '@typescript-eslint/only-throw-error': 'off',
         '@typescript-eslint/prefer-promise-reject-errors': 'off',
+      },
+    },
+    {
+      files: ['**/*.{spec,test}.{ts,tsx}'],
+      rules: {
+        'no-magic-numbers': 'off',
+        'max-lines': 'off',
+        'max-lines-per-function': 'off',
+        'max-statements': 'off',
       },
     },
     ...overrides,
