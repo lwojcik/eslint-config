@@ -24,6 +24,20 @@ The TypeScript install, plus the two optional peer dependencies of the `/react` 
 npm install --save-dev --save-exact @lwojcik/eslint-config eslint typescript typescript-eslint @eslint-react/eslint-plugin eslint-plugin-jsx-a11y-x
 ```
 
+### Angular project
+
+The TypeScript install, plus the optional peer dependency of the `/angular` config:
+
+```sh
+npm install --save-dev --save-exact @lwojcik/eslint-config eslint typescript typescript-eslint angular-eslint
+```
+
+For the optional RxJS rules, also install their plugin:
+
+```sh
+npm install --save-dev --save-exact eslint-plugin-rxjs-x
+```
+
 ## Use
 
 ### TypeScript project
@@ -58,6 +72,35 @@ export default [
 
 Your `tsconfig.json` must include the `.tsx` files and set `jsx`. See [React config](#react-config) for what it adds.
 
+### Angular project
+
+Add `createAngularConfig` after `createConfig`:
+
+```js
+// eslint.config.js
+import { createConfig } from '@lwojcik/eslint-config';
+import { createAngularConfig } from '@lwojcik/eslint-config/angular';
+
+export default [
+  ...createConfig({ tsconfigRootDir: import.meta.dirname }),
+  ...createAngularConfig({ selectorPrefix: 'app' }),
+];
+```
+
+See [Angular config](#angular-config) for what it adds.
+
+To lint RxJS code as well, add `createRxjsConfig` from the `/angular/rxjs` subpath. It works in any project that uses RxJS:
+
+```js
+import { createRxjsConfig } from '@lwojcik/eslint-config/angular/rxjs';
+
+export default [
+  ...createConfig({ tsconfigRootDir: import.meta.dirname }),
+  ...createAngularConfig({ selectorPrefix: 'app' }),
+  ...createRxjsConfig(),
+];
+```
+
 ## Options
 
 | Option            | Type                               | Default      | Meaning                                                                                                                         |
@@ -81,7 +124,7 @@ Rules apply to `**/src/**/*.{ts,tsx}` unless noted.
 - **Imports:** sorted with `simple-import-sort`, in the groups: side effects, `node:`, packages, your aliases in the order given, relative.
 - **Style:** 80-column lines, padding lines around returns, declarations and blocks, `eqeqeq`, `prefer-const`, `object-shorthand`.
 - **Plugins:** `unicorn` and `sonarjs` recommended sets (a few noisy rules are off), `security`, `security-node`, `no-secrets`, `no-unsanitized`, `xss`, `optimize-regex` and `n` for Node.
-- **Tests and scripts** (`**/test/**`, `**/scripts/**`): the `no-unsafe-*` and `no-explicit-any` rules are off, and in tests also the promise and throw rules.
+- **Tests and scripts** (`**/test/**`, `**/*.spec.*`, `**/*.test.*`, `**/scripts/**`): the `no-unsafe-*` and `no-explicit-any` rules are off, and in tests also the promise and throw rules. In colocated `*.spec.*` and `*.test.*` files, the magic-number, `max-lines`, `max-lines-per-function` and `max-statements` rules are off too.
 - **JSON** files are linted with `eslint-plugin-json`, comments allowed.
 
 Type-aware linting needs a `tsconfig.json` that includes your files.
@@ -95,6 +138,33 @@ Only for React projects: `createReactConfig` applies to `**/*.tsx` and takes `ts
 - **Base rules:** the base config also applies to `.tsx` files in `src/`. `max-lines-per-function` is 100 for `.tsx` files (50 for `.ts`), because JSX markup inflates component bodies. `unicorn/name-replacements` allows `props` and `ref`, since they are React API names.
 
 Both plugins are optional peer dependencies: a TypeScript-only project does not need them.
+
+## Angular config
+
+Only for Angular projects. `createAngularConfig` needs no `tsconfigRootDir`, because the base config already handles TypeScript parsing. It takes optional options:
+
+| Option           | Type              | Default | Meaning                                                                                                                      |
+| ---------------- | ----------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `selectorPrefix` | `string`          | off     | Enforces your prefix: kebab-case component selectors, camelCase directive selectors and pipe names starting with the prefix. |
+| `overrides`      | `Linter.Config[]` | `[]`    | Extra flat-config objects, appended last.                                                                                    |
+
+- **TypeScript files:** the `recommended` preset of `angular-eslint`, plus rules for signals (`prefer-signals`, `prefer-signal-model`, `no-uncalled-signals`, `computed-must-return`), `inject-at-top`, output and lifecycle hygiene, and `no-forward-ref`. Inline templates are linted too.
+- **Templates (`*.html`):** the `recommended` and `accessibility` presets, plus `button-has-type`, `no-any`, `no-non-null-assertion`, `no-inline-styles`, `prefer-class-binding`, `prefer-style-binding` and a few more.
+- **Severity:** every warning is raised to an error.
+- **Type-aware rules** from the base config are switched off for templates, which the template parser cannot type-check.
+
+`angular-eslint` is an optional peer dependency: a TypeScript-only or React project does not need it. Its major version follows Angular's.
+
+## RxJS config
+
+Optional, and independent of the Angular config. `createRxjsConfig` applies the `strict` preset of `eslint-plugin-rxjs-x` to `**/*.ts`, with every rule an error. It catches nested `subscribe`, `subscribe` without an error handler, floating observables, exposed subjects, async `subscribe` callbacks and misused `takeUntil`. It does not enforce Finnish notation.
+
+| Option         | Type              | Default | Meaning                                                                                          |
+| -------------- | ----------------- | ------- | ------------------------------------------------------------------------------------------------ |
+| `untypedFiles` | `string[]`        | `[]`    | The same globs you pass to `createConfig`. These rules need type information, so they skip them. |
+| `overrides`    | `Linter.Config[]` | `[]`    | Extra flat-config objects, appended last.                                                        |
+
+The plugin needs `rxjs` 7 and TypeScript below 6.1.
 
 ## Development
 

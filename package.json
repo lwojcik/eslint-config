@@ -14,13 +14,25 @@
     "./react": {
       "types": "./react.d.ts",
       "default": "./react.js"
+    },
+    "./angular": {
+      "types": "./angular.d.ts",
+      "default": "./angular.js"
+    },
+    "./angular/rxjs": {
+      "types": "./angular-rxjs.d.ts",
+      "default": "./angular-rxjs.js"
     }
   },
   "files": [
     "index.js",
     "index.d.ts",
     "react.js",
-    "react.d.ts"
+    "react.d.ts",
+    "angular.js",
+    "angular.d.ts",
+    "angular-rxjs.js",
+    "angular-rxjs.d.ts"
   ],
   "publishConfig": {
     "access": "public"
@@ -55,6 +67,8 @@
     "eslint-plugin-xss": "^0.1.12"
   },
   "devDependencies": {
+    "@angular/core": "22.3.0",
+    "@angular/router": "22.3.0",
     "@commitlint/cli": "21.2.4",
     "@commitlint/config-conventional": "21.2.4",
     "@eslint-react/eslint-plugin": "5.30.6",
@@ -62,18 +76,23 @@
     "@types/node": "26.6.6",
     "@types/react": "19.3.0",
     "@vitest/coverage-v8": "5.1.0",
+    "angular-eslint": "22.8.0",
     "czg": "1.14.0",
     "eslint-plugin-jsx-a11y-x": "0.2.0",
+    "eslint-plugin-rxjs-x": "1.0.7",
     "husky": "9.1.7",
     "prettier": "3.10.1",
     "release-it": "^21.1.2",
+    "rxjs": "7.8.2",
     "typescript": "6.0.3",
     "vitest": "5.1.0"
   },
   "peerDependencies": {
     "@eslint-react/eslint-plugin": "^5.0.0",
+    "angular-eslint": "^22.0.0",
     "eslint": "^10.0.0",
     "eslint-plugin-jsx-a11y-x": "^0.2.0",
+    "eslint-plugin-rxjs-x": "^1.0.0",
     "typescript": ">=5.0.0",
     "typescript-eslint": "^8.0.0"
   },
@@ -82,6 +101,12 @@
       "optional": true
     },
     "eslint-plugin-jsx-a11y-x": {
+      "optional": true
+    },
+    "angular-eslint": {
+      "optional": true
+    },
+    "eslint-plugin-rxjs-x": {
       "optional": true
     }
   }
