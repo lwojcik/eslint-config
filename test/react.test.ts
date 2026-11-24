@@ -59,6 +59,26 @@ describe('createReactConfig', () => {
     });
   });
 
+  it('allows components up to 100 lines', async () => {
+    const body = Array.from({ length: 70 }, () => '<p>text</p>').join('\n');
+    const messages = await lintReact(
+      `export const Long = () => (\n<div>\n${body}\n</div>\n);\n`,
+    );
+
+    expect(messages.map(({ id }) => id)).not.toContain(
+      'max-lines-per-function',
+    );
+  });
+
+  it('reports components over 100 lines', async () => {
+    const body = Array.from({ length: 110 }, () => '<p>text</p>').join('\n');
+    const messages = await lintReact(
+      `export const Long = () => (\n<div>\n${body}\n</div>\n);\n`,
+    );
+
+    expect(messages.map(({ id }) => id)).toContain('max-lines-per-function');
+  });
+
   it('lints only tsx files', async () => {
     const messages = await lintReact(
       `export const value = [1, 2].map((item) => item);\n`,

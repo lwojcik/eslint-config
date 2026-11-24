@@ -3,6 +3,7 @@ import { defineConfig } from 'eslint/config';
 import jsxA11y from 'eslint-plugin-jsx-a11y-x';
 
 const REACT_FILES = ['**/*.tsx'];
+const MAX_COMPONENT_LINES = 100;
 
 const warningsToErrors = (rules) =>
   Object.fromEntries(
@@ -31,5 +32,18 @@ export const createReactConfig = ({ tsconfigRootDir, overrides = [] }) =>
       rules: warningsToErrors(rules),
     },
     { ...jsxA11y.configs.strict, files: REACT_FILES },
+    {
+      files: REACT_FILES,
+      rules: {
+        'max-lines-per-function': [
+          'error',
+          {
+            max: MAX_COMPONENT_LINES,
+            skipBlankLines: true,
+            skipComments: true,
+          },
+        ],
+      },
+    },
     ...overrides,
   );
