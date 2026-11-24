@@ -8,5 +8,12 @@
     "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": ["index.d.ts", "react.d.ts", "test/*.ts", "vitest.config.ts"]
+  "include": [
+    "index.d.ts",
+    "react.d.ts",
+    "angular.d.ts",
+    "angular-rxjs.d.ts",
+    "test/*.ts",
+    "vitest.config.ts"
+  ]
 }
