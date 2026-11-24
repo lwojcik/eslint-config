@@ -13,6 +13,7 @@
     "react.d.ts",
     "angular.d.ts",
     "angular-rxjs.d.ts",
+    "tanstack-query.d.ts",
     "test/*.ts",
     "vitest.config.ts"
   ]

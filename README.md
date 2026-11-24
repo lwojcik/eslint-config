@@ -38,6 +38,14 @@ For the optional RxJS rules, also install their plugin:
 npm install --save-dev --save-exact eslint-plugin-rxjs-x
 ```
 
+### TanStack Query
+
+Optional, for projects that use TanStack Query. The rules target the `use*` hooks and `queryOptions()`, so they fit React, Vue, Solid and Svelte best, and cover Angular only partly (see [TanStack Query config](#tanstack-query-config)). Add its plugin to whichever install above you use:
+
+```sh
+npm install --save-dev --save-exact @tanstack/eslint-plugin-query
+```
+
 ## Use
 
 ### TypeScript project
@@ -98,6 +106,20 @@ export default [
   ...createConfig({ tsconfigRootDir: import.meta.dirname }),
   ...createAngularConfig({ selectorPrefix: 'app' }),
   ...createRxjsConfig(),
+];
+```
+
+### TanStack Query
+
+Add `createTanstackQueryConfig` from the `/tanstack-query` subpath to any of the setups above:
+
+```js
+import { createTanstackQueryConfig } from '@lwojcik/eslint-config/tanstack-query';
+
+export default [
+  ...createConfig({ tsconfigRootDir: import.meta.dirname }),
+  ...createReactConfig({ tsconfigRootDir: import.meta.dirname }),
+  ...createTanstackQueryConfig(),
 ];
 ```
 
@@ -165,6 +187,14 @@ Optional, and independent of the Angular config. `createRxjsConfig` applies the 
 | `overrides`    | `Linter.Config[]` | `[]`    | Extra flat-config objects, appended last.                                                        |
 
 The plugin needs `rxjs` 7 and TypeScript below 6.1.
+
+## TanStack Query config
+
+Optional, and independent of the React and Angular configs. `createTanstackQueryConfig` applies the `flat/recommended-strict` preset of `@tanstack/eslint-plugin-query` to `**/*.{ts,tsx}`, with every warning raised to an error. It takes one option, `overrides` (`Linter.Config[]`, appended last).
+
+- **Correctness:** `exhaustive-deps` (query keys must include every variable the query function uses), `stable-query-client`, `no-unstable-deps`, `no-void-query-fn` and `no-rest-destructuring`.
+- **Angular:** the rules recognise the `use*` hooks and `queryOptions()`, but not `injectQuery`, `injectMutation` or `injectInfiniteQuery`. Define your options with `queryOptions()` and pass them in, as in `injectQuery(() => todoOptions(this.id()))`, so `exhaustive-deps` and `no-void-query-fn` can check them. Options written inline inside `injectQuery(() => ({ ... }))` are not checked.
+- **Conventions:** `infinite-query-property-order`, `mutation-property-order` and `prefer-query-options`, which asks you to define queries with `queryOptions()` instead of inline objects.
 
 ## Development
 
