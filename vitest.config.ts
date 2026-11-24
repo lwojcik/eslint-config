@@ -8,6 +8,7 @@ export default defineConfig({
       provider: 'v8',
       include: [
         'index.js',
+        'xss-plugin.js',
         'react.js',
         'angular.js',
         'angular-rxjs.js',

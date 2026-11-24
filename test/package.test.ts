@@ -34,6 +34,21 @@ describe('package.json', () => {
     expect(pkg.files).toContain(target.replace('./', ''));
   });
 
+  it('ships every file that an export target imports', () => {
+    const imported = [...new Set(targets.map(([, target]) => target))]
+      .filter((target) => target.endsWith('.js'))
+      .flatMap((target) =>
+        [
+          ...readFileSync(resolve(ROOT, target), 'utf8').matchAll(
+            /from '\.\/([^']+)'/g,
+          ),
+        ].map(([, file]) => file),
+      );
+
+    expect(imported.length).toBeGreaterThan(0);
+    expect(imported.filter((file) => !pkg.files.includes(file))).toEqual([]);
+  });
+
   it('lists only files that exist', () => {
     expect(
       pkg.files.filter((file) => !existsSync(resolve(ROOT, file))),

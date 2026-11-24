@@ -166,7 +166,7 @@ Rules apply to `**/src/**/*.{ts,tsx}` unless noted.
 - **No comments:** every comment is an error except `eslint` and `global` directives (all files, including tests). This includes JSX comments such as `{/* note */}`.
 - **Imports:** sorted with `simple-import-sort`, in the groups: side effects, `node:`, packages, your aliases in the order given, relative.
 - **Style:** 80-column lines, padding lines around returns, declarations and blocks, `eqeqeq`, `prefer-const`, `object-shorthand`.
-- **Plugins:** `unicorn` and `sonarjs` recommended sets (a few noisy rules are off), `security`, `security-node`, `no-secrets`, `no-unsanitized`, `xss`, `optimize-regex` and `n` for Node.
+- **Plugins:** `unicorn` and `sonarjs` recommended sets (a few noisy rules are off), `security`, `security-node`, `no-secrets`, `no-unsanitized`, `optimize-regex` and `n` for Node. `xss/no-location-href-assign` is a rule built into this package, because `eslint-plugin-xss` has not been updated since 2022 and crashes on ESLint 10.
 - **Tests and scripts** (`**/test/**`, `**/*.spec.*`, `**/*.test.*`, `**/scripts/**`): the `no-unsafe-*` and `no-explicit-any` rules are off, and in tests also the promise and throw rules. In colocated `*.spec.*` and `*.test.*` files, the magic-number, `max-lines`, `max-lines-per-function` and `max-statements` rules are off too.
 - **JSON** files are linted with `eslint-plugin-json`, comments allowed.
 

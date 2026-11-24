@@ -14,8 +14,9 @@ import securityNode from 'eslint-plugin-security-node';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import { configs as sonarjs } from 'eslint-plugin-sonarjs';
 import unicorn from 'eslint-plugin-unicorn';
-import xss from 'eslint-plugin-xss';
 import tseslint from 'typescript-eslint';
+
+import xss from './xss-plugin.js';
 
 const SOURCE_FILES = ['**/src/**/*.{ts,tsx}'];
 const LOOP_SELECTORS = [
