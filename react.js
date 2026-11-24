@@ -3,7 +3,13 @@ import { defineConfig } from 'eslint/config';
 import jsxA11y from 'eslint-plugin-jsx-a11y-x';
 
 const REACT_FILES = ['**/*.tsx'];
+const REACT_SOURCE_FILES = ['**/src/**/*.tsx'];
 const MAX_COMPONENT_LINES = 100;
+const REACT_NAME_REPLACEMENTS = {
+  dir: { direction: false },
+  props: false,
+  ref: false,
+};
 
 const warningsToErrors = (rules) =>
   Object.fromEntries(
@@ -33,8 +39,12 @@ export const createReactConfig = ({ tsconfigRootDir, overrides = [] }) =>
     },
     { ...jsxA11y.configs.strict, files: REACT_FILES },
     {
-      files: REACT_FILES,
+      files: REACT_SOURCE_FILES,
       rules: {
+        'unicorn/name-replacements': [
+          'error',
+          { replacements: REACT_NAME_REPLACEMENTS },
+        ],
         'max-lines-per-function': [
           'error',
           {

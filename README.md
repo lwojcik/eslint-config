@@ -92,7 +92,7 @@ Only for React projects: `createReactConfig` applies to `**/*.tsx` and takes `ts
 
 - **React rules:** the `strict-type-checked` preset of `@eslint-react/eslint-plugin`, with every warning raised to an error. It covers hooks, purity, keys, leaked conditional rendering, and unsafe DOM APIs such as `dangerouslySetInnerHTML`. `eslint-plugin-react-hooks` is not needed, because this preset replaces its rules.
 - **Accessibility:** the `strict` preset of `eslint-plugin-jsx-a11y-x`, a fork of `eslint-plugin-jsx-a11y` that supports ESLint 10.
-- **Base rules:** the base config also applies to `.tsx` files in `src/`. `max-lines-per-function` is 100 for `.tsx` files (50 for `.ts`), because JSX markup inflates component bodies.
+- **Base rules:** the base config also applies to `.tsx` files in `src/`. `max-lines-per-function` is 100 for `.tsx` files (50 for `.ts`), because JSX markup inflates component bodies. `unicorn/name-replacements` allows `props` and `ref`, since they are React API names.
 
 Both plugins are optional peer dependencies: a TypeScript-only project does not need them.
 
