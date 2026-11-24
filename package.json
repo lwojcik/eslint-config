@@ -30,6 +30,7 @@
   },
   "files": [
     "index.js",
+    "xss-plugin.js",
     "index.d.ts",
     "react.js",
     "react.d.ts",
@@ -69,8 +70,7 @@
     "eslint-plugin-security-node": "^1.1.4",
     "eslint-plugin-simple-import-sort": "^14.0.0",
     "eslint-plugin-sonarjs": "^4.2.2",
-    "eslint-plugin-unicorn": "^79.0.0",
-    "eslint-plugin-xss": "^0.1.12"
+    "eslint-plugin-unicorn": "^79.0.0"
   },
   "devDependencies": {
     "@angular/core": "22.3.0",
