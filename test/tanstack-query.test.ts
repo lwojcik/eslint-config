@@ -96,7 +96,7 @@ describe('in an Angular project', () => {
   };
 
   const component = (body: string) =>
-    `import { ChangeDetectionStrategy, Component, input } from '@angular/core';\nimport { injectQuery, queryOptions } from '@tanstack/angular-query-experimental';\n\nexport const todoOptions = (id: number) =>\n  queryOptions({\n    queryFn: () => Promise.resolve(String(id)),\n    queryKey: ['todo', id],\n  });\n\n@Component({ selector: 'app-x', template: '', changeDetection: ChangeDetectionStrategy.OnPush })\nexport class XComponent {\n  readonly id = input.required<number>();\n${body}\n}\n`;
+    `import { ChangeDetectionStrategy, Component, input } from '@angular/core';\nimport { injectQuery, queryOptions } from '@tanstack/angular-query';\n\nexport const todoOptions = (id: number) =>\n  queryOptions({\n    queryFn: () => Promise.resolve(String(id)),\n    queryKey: ['todo', id],\n  });\n\n@Component({ selector: 'app-x', template: '', changeDetection: ChangeDetectionStrategy.OnPush })\nexport class XComponent {\n  readonly id = input.required<number>();\n${body}\n}\n`;
 
   it('lints injectQuery with queryOptions clean', async () => {
     expect(
@@ -111,7 +111,7 @@ describe('in an Angular project', () => {
   it('reports missing query key dependencies in queryOptions', async () => {
     expect(
       await lintAngular(
-        `import { queryOptions } from '@tanstack/angular-query-experimental';\n\nexport const todoOptions = (id: number) =>\n  queryOptions({ queryFn: () => Promise.resolve(String(id)), queryKey: ['todo'] });\n`,
+        `import { queryOptions } from '@tanstack/angular-query';\n\nexport const todoOptions = (id: number) =>\n  queryOptions({ queryFn: () => Promise.resolve(String(id)), queryKey: ['todo'] });\n`,
       ),
     ).toContain('@tanstack/query/exhaustive-deps');
   });
@@ -119,7 +119,7 @@ describe('in an Angular project', () => {
   it('reports a void queryFn in queryOptions', async () => {
     expect(
       await lintAngular(
-        `import { queryOptions } from '@tanstack/angular-query-experimental';\n\nexport const options = queryOptions({\n  queryFn: async () => {\n    await Promise.resolve(1);\n  },\n  queryKey: ['void'],\n});\n`,
+        `import { queryOptions } from '@tanstack/angular-query';\n\nexport const options = queryOptions({\n  queryFn: async () => {\n    await Promise.resolve(1);\n  },\n  queryKey: ['void'],\n});\n`,
       ),
     ).toContain('@tanstack/query/no-void-query-fn');
   });
