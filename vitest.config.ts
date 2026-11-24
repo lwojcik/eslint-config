@@ -12,6 +12,7 @@ export default defineConfig({
         'angular.js',
         'angular-rxjs.js',
         'tanstack-query.js',
+        'nestjs.js',
       ],
       thresholds: {
         lines: 100,
