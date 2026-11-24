@@ -3,6 +3,10 @@
   "version": "0.2.0",
   "description": "Opinionated ESLint config for TypeScript projects focused on enforcing functional style and security",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lwojcik/eslint-config.git"
+  },
   "keywords": [
     "eslint",
     "eslint-config",

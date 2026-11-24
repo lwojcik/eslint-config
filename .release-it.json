@@ -13,7 +13,7 @@
     "releaseName": "v${version}"
   },
   "npm": {
-    "publish": true
+    "publish": false
   },
   "hooks": {
     "before:init": ["npm run format:check", "npm run typecheck", "npm test"]
