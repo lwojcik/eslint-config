@@ -1,0 +1,53 @@
+# @lwojcik/eslint-config
+
+> Opinionated ESLint flat-config factories for TypeScript projects. They enforce functional style, security and a no-comments policy. Requires ESLint 10, ESM, typescript-eslint 8.
+
+Every export is a function returning `Linter.Config[]`. Spread the result into `eslint.config.js`; later entries win, and each factory takes `overrides` (appended last).
+
+## Setup
+
+Install with exact pins:
+
+    npm install --save-dev --save-exact @lwojcik/eslint-config eslint typescript typescript-eslint
+
+    // eslint.config.js
+    import { createConfig } from '@lwojcik/eslint-config';
+
+    export default createConfig({ tsconfigRootDir: import.meta.dirname });
+
+`tsconfigRootDir` is required. Your tsconfig.json must include every linted .ts/.tsx file, or list the stragglers in `untypedFiles`.
+
+Add framework configs after `createConfig` (each plugin is an optional peer: install only what you use):
+
+| Import                                   | Factory                    | Extra install                                                    |
+| ---------------------------------------- | -------------------------- | ---------------------------------------------------------------- |
+| `@lwojcik/eslint-config/react`           | `createReactConfig`        | `@eslint-react/eslint-plugin eslint-plugin-jsx-a11y-x`           |
+| `@lwojcik/eslint-config/angular`         | `createAngularConfig`      | `angular-eslint`                                                 |
+| `@lwojcik/eslint-config/angular/rxjs`    | `createRxjsConfig`         | `eslint-plugin-rxjs-x`                                           |
+| `@lwojcik/eslint-config/tanstack-query`  | `createTanstackQueryConfig`| `@tanstack/eslint-plugin-query`                                  |
+| `@lwojcik/eslint-config/nestjs`          | `createNestjsConfig`       | `@darraghor/eslint-plugin-nestjs-typed class-validator`          |
+
+Options are typed in the shipped `.d.ts` files, with JSDoc on each. Full tables are in README.md.
+
+## Rules that surprise people (and how to satisfy them)
+
+Applies to `**/src/**/*.{ts,tsx}` unless noted. Fix the code; do not disable the rule unless noted.
+
+- No comments at all (all .ts/.tsx/.js, tests included). Delete them and put the intent in names, types and small functions. Only `eslint` and `global` directives are allowed. A disable directive is acceptable only where a rule's own message permits it, and a unused one is an error.
+- No loops and no `let`. Use `map`, `filter`, `flatMap`, `find`, `some`, `reduce` and `const`. Order-dependent async work may keep a loop with an eslint-disable directive.
+- No mutation (`functional/immutable-data`): no `push`, `sort()` in place, index assignment or property assignment on existing values. Use spread, `toSorted`, `toSpliced`, `with`, `Object.fromEntries`. Variables named `draft...` are exempt (immer).
+- At most 2 parameters per function: take one options object instead. At most 20 statements, 50 lines per function (100 in .tsx), 250 lines per file, nesting depth 4, complexity 10, one class per file.
+- No magic numbers (0, 1, -1, 2 are fine; anything goes in `src/config.ts`). Identifiers need 2+ characters.
+- File names are kebab-case or PascalCase.
+- No `console`, no `process.env` in src if the project set `processEnv`.
+- Imports are sorted by `simple-import-sort`: side effects, `node:`, packages, aliases (in the order given), relative. Run `eslint --fix` to sort.
+- 80-column lines and blank lines around returns, declarations and blocks: `eslint --fix` handles both.
+- NestJS: classes with injected services may take up to 5 constructor parameters in files named `*.service.ts`, `*.controller.ts` and similar.
+
+Tests and scripts (`**/test/**`, `*.spec.*`, `*.test.*`, `**/scripts/**`) relax the `no-unsafe-*` and `no-explicit-any` rules. Spec and test files also skip the magic-number and size limits.
+
+## Workflow for agents
+
+1. Run `npx eslint --fix <paths>` first: it resolves import order, padding and formatting automatically.
+2. Fix what remains by hand, following the list above. The rule id in the output (for example `functional/immutable-data`) maps to the plugin of the same prefix.
+3. Rerun `npx eslint <paths>` until it exits 0. Do not silence rules in `overrides` to get green; ask the user first.

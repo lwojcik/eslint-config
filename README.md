@@ -6,6 +6,8 @@
 
 A heavily opinionated ESLint config factory for TypeScript projects, focused on enforcing functional style and security.
 
+It supports plain TypeScript projects, plus optional configs for React, Angular (with RxJS), NestJS and TanStack Query.
+
 ## Install
 
 Pin an exact version: a major bump of a bundled plugin (unicorn, sonarjs, ...) can add failures to your whole codebase, so it should reach you as a version change you choose.
@@ -234,6 +236,14 @@ Optional, and independent of the other framework configs. `createNestjsConfig` a
 - **Module scan:** `injectable-should-be-provided` skips paths matching `node_modules`, `.test.` and `.spec.`. The plugin's own default builds these as regular expressions without escaping the dots, so `.test.` also matches `/test/` and `/latest/`; this config escapes them.
 
 The plugin needs TypeScript below 6.1 and the `class-validator` package.
+
+## Using with AI agents
+
+[llms.txt](llms.txt) ships in the package (`node_modules/@lwojcik/eslint-config/llms.txt`). It gives coding agents the setup, the rules that surprise people (no comments, no loops, no mutation) and how to satisfy them. Options carry JSDoc in the `.d.ts` files. To make agents in your project follow it, add a line to your `AGENTS.md` or `CLAUDE.md`:
+
+```md
+Lint rules come from @lwojcik/eslint-config. Read node_modules/@lwojcik/eslint-config/llms.txt before writing code, and run `npx eslint --fix` after.
+```
 
 ## Development
 
