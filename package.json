@@ -10,11 +10,17 @@
     ".": {
       "types": "./index.d.ts",
       "default": "./index.js"
+    },
+    "./react": {
+      "types": "./react.d.ts",
+      "default": "./react.js"
     }
   },
   "files": [
     "index.js",
-    "index.d.ts"
+    "index.d.ts",
+    "react.js",
+    "react.d.ts"
   ],
   "publishConfig": {
     "access": "public"
@@ -51,10 +57,13 @@
   "devDependencies": {
     "@commitlint/cli": "21.2.4",
     "@commitlint/config-conventional": "21.2.4",
+    "@eslint-react/eslint-plugin": "5.30.6",
     "@release-it/conventional-changelog": "^12.0.2",
     "@types/node": "26.6.6",
+    "@types/react": "19.3.0",
     "@vitest/coverage-v8": "5.1.0",
     "czg": "1.14.0",
+    "eslint-plugin-jsx-a11y-x": "0.2.0",
     "husky": "9.1.7",
     "prettier": "3.10.1",
     "release-it": "^21.1.2",
@@ -62,8 +71,18 @@
     "vitest": "5.1.0"
   },
   "peerDependencies": {
+    "@eslint-react/eslint-plugin": "^5.0.0",
     "eslint": "^10.0.0",
+    "eslint-plugin-jsx-a11y-x": "^0.2.0",
     "typescript": ">=5.0.0",
     "typescript-eslint": "^8.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@eslint-react/eslint-plugin": {
+      "optional": true
+    },
+    "eslint-plugin-jsx-a11y-x": {
+      "optional": true
+    }
   }
 }

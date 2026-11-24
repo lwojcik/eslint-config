@@ -17,7 +17,7 @@ import unicorn from 'eslint-plugin-unicorn';
 import xss from 'eslint-plugin-xss';
 import tseslint from 'typescript-eslint';
 
-const SOURCE_FILES = ['**/src/**/*.ts'];
+const SOURCE_FILES = ['**/src/**/*.{ts,tsx}'];
 const LOOP_SELECTORS = [
   'ForStatement',
   'ForInStatement',
@@ -128,7 +128,7 @@ export const createConfig = ({
       },
     },
     {
-      files: ['**/*.ts'],
+      files: ['**/*.{ts,tsx}'],
       ignores: untypedFiles,
       languageOptions: {
         parserOptions: { projectService: true, tsconfigRootDir },
@@ -255,12 +255,12 @@ export const createConfig = ({
       },
     },
     {
-      files: ['**/*.{ts,js}'],
+      files: ['**/*.{ts,tsx,js}'],
       plugins: { 'no-comments': noComments },
       rules: { 'no-comments/disallowComments': 'error' },
     },
     {
-      files: ['**/test/**/*.ts', '**/scripts/**/*.ts'],
+      files: ['**/test/**/*.{ts,tsx}', '**/scripts/**/*.{ts,tsx}'],
       rules: {
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-unsafe-argument': 'off',
@@ -271,7 +271,7 @@ export const createConfig = ({
       },
     },
     {
-      files: ['**/test/**/*.ts'],
+      files: ['**/test/**/*.{ts,tsx}'],
       rules: {
         '@typescript-eslint/require-await': 'off',
         '@typescript-eslint/only-throw-error': 'off',
