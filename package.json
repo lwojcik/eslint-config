@@ -3,6 +3,18 @@
   "version": "0.2.0",
   "description": "Opinionated ESLint config for TypeScript projects focused on enforcing functional style and security",
   "license": "MIT",
+  "keywords": [
+    "eslint",
+    "eslint-config",
+    "flat-config",
+    "typescript",
+    "functional",
+    "security",
+    "react",
+    "angular",
+    "nestjs",
+    "llms"
+  ],
   "type": "module",
   "main": "index.js",
   "types": "index.d.ts",
@@ -45,7 +57,8 @@
     "tanstack-query.js",
     "tanstack-query.d.ts",
     "nestjs.js",
-    "nestjs.d.ts"
+    "nestjs.d.ts",
+    "llms.txt"
   ],
   "publishConfig": {
     "access": "public"
