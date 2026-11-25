@@ -71,6 +71,7 @@
     "prepare": "husky",
     "commit": "czg",
     "format": "prettier --write .",
+    "lint": "eslint .",
     "format:check": "prettier --check .",
     "test": "vitest run",
     "typecheck": "tsc",

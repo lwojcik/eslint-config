@@ -11,8 +11,8 @@
 
 ## Commands
 
-- `npm test`: run all tests. `npm run typecheck`: checks the `.d.ts` files against the tests. `npm run format:check`: Prettier.
-- Run all three before finishing a change.
+- `npm test`: run all tests. `npm run typecheck`: checks the `.d.ts` files against the tests. `npm run format:check`: Prettier. `npm run lint`: ESLint with this package's own config.
+- Run all four before finishing a change.
 
 ## Conventions
 

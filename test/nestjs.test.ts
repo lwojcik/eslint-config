@@ -1,6 +1,7 @@
-import { ESLint, type Linter } from 'eslint';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+
+import { ESLint, type Linter } from 'eslint';
 import { describe, expect, it } from 'vitest';
 
 import { createConfig } from '../index.js';
@@ -24,7 +25,7 @@ const createEslint = (options?: NestjsOptions) =>
     overrideConfig: [
       ...createConfig({ tsconfigRootDir: FIXTURES }),
       ...createNestjsConfig({ sourceGlobs: SOURCE_GLOBS, ...options }),
-    ] as Linter.Config[],
+    ],
   });
 
 const eslint = createEslint();
@@ -350,7 +351,7 @@ describe('sourceGlobs option', () => {
       new ESLint({
         cwd: FIXTURES,
         overrideConfigFile: true,
-        overrideConfig: createNestjsConfig() as Linter.Config[],
+        overrideConfig: createNestjsConfig(),
       }),
     );
 

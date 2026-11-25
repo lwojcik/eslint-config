@@ -1,7 +1,8 @@
-import { ESLint, type Linter } from 'eslint';
 import { resolve } from 'node:path';
 
-import { createConfig, type ConfigOptions } from '../index.js';
+import { ESLint } from 'eslint';
+
+import { type ConfigOptions, createConfig } from '../index.js';
 
 export const FIXTURES = resolve(import.meta.dirname, 'fixtures');
 
@@ -20,7 +21,7 @@ export const lint = async ({
     overrideConfig: createConfig({
       tsconfigRootDir: FIXTURES,
       ...options,
-    }) as Linter.Config[],
+    }),
   });
   const [result] = await eslint.lintText(code, {
     filePath: resolve(FIXTURES, file),
