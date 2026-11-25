@@ -20,4 +20,4 @@
 - Adding a rule or option: update the factory, its `.d.ts` (with JSDoc, which is allowed in `.d.ts`), a fixture plus test, `README.md` and `llms.txt`.
 - Adding an entry point: add it to `exports` and `files` in `package.json`. `test/package.test.ts` fails if a target is missing or not shipped.
 - Framework plugins are optional peer dependencies and also devDependencies (pinned exactly). Keep both in sync.
-- Commits follow Conventional Commits (commitlint runs in a husky hook); PR titles are checked too. Use `npm run commit` for the prompt. Do not run `npm run release`.
+- Commits follow Conventional Commits (commitlint runs in a husky hook); PR titles are checked too. Use `npm run commit` for the prompt. Do not run `npm run release`. Releases: `npm run release:prepare` opens the version PR; after it merges, `npm run release` tags and creates the GitHub release; pushing the tag triggers `.github/workflows/publish.yml`, which publishes to npm with provenance via trusted publishing (never publish from a laptop).
