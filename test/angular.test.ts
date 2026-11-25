@@ -1,9 +1,10 @@
-import { ESLint, type Linter } from 'eslint';
 import { resolve } from 'node:path';
+
+import { ESLint, type Linter } from 'eslint';
 import { describe, expect, it } from 'vitest';
 
-import { createConfig } from '../index.js';
 import { createAngularConfig } from '../angular.js';
+import { createConfig } from '../index.js';
 import { FIXTURES } from './lint.js';
 
 const TS_FILE = 'src/app.component.ts';

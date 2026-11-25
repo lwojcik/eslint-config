@@ -1,5 +1,6 @@
-import { ESLint, type Linter } from 'eslint';
 import { resolve } from 'node:path';
+
+import { ESLint, type Linter } from 'eslint';
 import { describe, expect, it } from 'vitest';
 
 import { createAngularConfig } from '../angular.js';
