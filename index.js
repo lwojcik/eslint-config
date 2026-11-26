@@ -29,14 +29,18 @@ const LOOP_SELECTORS = [
 const TEST_FILES = ['**/test/**/*.{ts,tsx}', '**/*.{spec,test}.{ts,tsx}'];
 const DRAFT_PATTERNS = ['draft.**', 'draft*.**', '**.draft.**', '**.draft*.**'];
 
+const escapeRegex = (value) => value.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
 const packagePattern = (aliases) =>
-  aliases.length > 0 ? `^(?!${aliases.join('|')})@?\\w` : '^@?\\w';
+  aliases.length > 0
+    ? `^(?!(?:${aliases.map(escapeRegex).join('|')})/)@?\\w`
+    : '^@?\\w';
 
 const importGroups = (aliases) => [
   ['^\\u0000'],
   ['^node:'],
   [packagePattern(aliases)],
-  ...aliases.map((alias) => [`^${alias}/`]),
+  ...aliases.map((alias) => [`^${escapeRegex(alias)}/`]),
   ['^\\.'],
 ];
 

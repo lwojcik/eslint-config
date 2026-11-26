@@ -11,7 +11,7 @@ export interface ProcessEnvRule {
 export interface ConfigOptions {
   /** Directory of your tsconfig.json. Pass `import.meta.dirname`. */
   tsconfigRootDir: string;
-  /** Import path aliases such as `@app`, sorted after packages. */
+  /** Import path aliases such as `@app` or `@` (no trailing `/`), sorted after packages. */
   importAliases?: string[];
   /** Globs to ignore, besides coverage and dist directories. */
   ignores?: string[];
