@@ -56,6 +56,17 @@ describe('importAliases', () => {
   });
 });
 
+describe('importAliases with a bare @', () => {
+  const options = { importAliases: ['@'] };
+  const code = `import { useQuery } from '@tanstack/react-query';\nimport { useState } from 'react';\n\nimport { environment } from '@/config/environment';\n\nimport { local } from './local';\n\nexport const all = [useQuery, useState, environment, local];\n`;
+
+  it('keeps scoped packages in the packages group', async () => {
+    expect(await lint({ file: FILE, code, options })).not.toContain(
+      'simple-import-sort/imports',
+    );
+  });
+});
+
 describe('overrides', () => {
   it('come last and win', async () => {
     const code = `export const wait = (): number => 4242;\n`;

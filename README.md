@@ -148,15 +148,15 @@ export default [
 
 ## Options
 
-| Option            | Type                               | Default      | Meaning                                                                                                                         |
-| ----------------- | ---------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| `tsconfigRootDir` | `string`                           | required     | Directory of your `tsconfig.json`, for type-aware linting. Pass `import.meta.dirname`.                                          |
-| `importAliases`   | `string[]`                         | `[]`         | Path aliases such as `@app`, each sorted into its own import group after the packages and before relative imports.              |
-| `ignores`         | `string[]`                         | `[]`         | Globs to ignore, besides `**/coverage/` and `**/dist/`.                                                                         |
-| `untypedFiles`    | `string[]`                         | `[]`         | TypeScript files outside your tsconfig; type-aware rules are switched off for them.                                             |
-| `nodeVersion`     | `string`                           | `'>=24.0.0'` | The Node range `eslint-plugin-n` checks against.                                                                                |
-| `processEnv`      | `{ message, allowedIn: string[] }` | off          | Bans `process.env` in `src/` with your message, except in the `allowedIn` globs (for example where you inject the environment). |
-| `overrides`       | `Linter.Config[]`                  | `[]`         | Extra flat-config objects, appended last.                                                                                       |
+| Option            | Type                               | Default      | Meaning                                                                                                                                                                   |
+| ----------------- | ---------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tsconfigRootDir` | `string`                           | required     | Directory of your `tsconfig.json`, for type-aware linting. Pass `import.meta.dirname`.                                                                                    |
+| `importAliases`   | `string[]`                         | `[]`         | Path aliases such as `@app` or `@` (no trailing `/`; regex characters are escaped), each sorted into its own import group after the packages and before relative imports. |
+| `ignores`         | `string[]`                         | `[]`         | Globs to ignore, besides `**/coverage/` and `**/dist/`.                                                                                                                   |
+| `untypedFiles`    | `string[]`                         | `[]`         | TypeScript files outside your tsconfig; type-aware rules are switched off for them.                                                                                       |
+| `nodeVersion`     | `string`                           | `'>=24.0.0'` | The Node range `eslint-plugin-n` checks against.                                                                                                                          |
+| `processEnv`      | `{ message, allowedIn: string[] }` | off          | Bans `process.env` in `src/` with your message, except in the `allowedIn` globs (for example where you inject the environment).                                           |
+| `overrides`       | `Linter.Config[]`                  | `[]`         | Extra flat-config objects, appended last.                                                                                                                                 |
 
 ## What it enforces
 
